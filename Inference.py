@@ -42,8 +42,8 @@ while True:
     for row in r:
         xmin, ymin, xmax, ymax, confidence, cls = row
         
-        xmin, ymin, xmax, ymax = int(xmin), int(ymin), int(xmax), int(ymax)
-
+        xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
+        
     # boxes = results.boxes
 
     # for box in boxes:
