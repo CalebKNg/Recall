@@ -26,7 +26,7 @@ while True:
 
     # inference
     results = model(frame)
-    print(results.pandas().xyxy[0])
+    print(results.xyxy[0])
     # boxes = results.boxes
 
     # for box in boxes:
