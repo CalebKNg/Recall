@@ -42,7 +42,7 @@ while True:
     for row in r:
         xmin, ymin, xmax, ymax, confidence, cls = row
         
-
+        xmin, ymin, xmax, ymax = int(xmin), int(ymin), int(xmax), int(ymax)
 
     # boxes = results.boxes
 
