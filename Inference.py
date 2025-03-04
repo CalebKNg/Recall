@@ -25,7 +25,7 @@ while True:
     frame = camera.capture_array()
 
     # inference
-    results = model(frame)
+    results = model(frame, stream=True)
 
         # coordinates
     for r in results:
