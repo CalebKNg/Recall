@@ -26,35 +26,35 @@ while True:
 
     # inference
     results = model(frame)
+    results.print()
+    # boxes = results.boxes
 
-    boxes = results.boxes
+    # for box in boxes:
+    #     # bounding box
+    #     x1, y1, x2, y2 = box.xyxy[0]
+    #     x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2) # convert to int values
 
-    for box in boxes:
-        # bounding box
-        x1, y1, x2, y2 = box.xyxy[0]
-        x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2) # convert to int values
+    #     # put box in cam
 
-        # put box in cam
+    #     # confidence
+    #     confidence = math.ceil((box.conf[0]*100))/100
+    #     # print("Confidence --->",confidence)
 
-        # confidence
-        confidence = math.ceil((box.conf[0]*100))/100
-        # print("Confidence --->",confidence)
-
-        # class name
-        cls = int(box.cls[0])
-        # print("Class name -->", classNames[cls])
+    #     # class name
+    #     cls = int(box.cls[0])
+    #     # print("Class name -->", classNames[cls])
         
 
 
 
-        # object details
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
-        org = [x1, y1]
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        fontScale = 1
-        color = (255, 0, 0)
-        thickness = 2
-        cv2.putText(frame, box.cls, org, font, fontScale, color, thickness)
+    #     # object details
+    #     cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
+    #     org = [x1, y1]
+    #     font = cv2.FONT_HERSHEY_SIMPLEX
+    #     fontScale = 1
+    #     color = (255, 0, 0)
+    #     thickness = 2
+    #     cv2.putText(frame, box.cls, org, font, fontScale, color, thickness)
 
 
 
