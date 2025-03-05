@@ -74,7 +74,7 @@ while True:
         cv2.putText(frame, classNames[cls], org, font, fontScale, color, thickness)
 
 
-
+    time.sleep(0.1)
     cv2.imshow('Camera', frame)
     
     # Press 'q' to exit the loop
