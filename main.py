@@ -23,7 +23,7 @@ class Recall():
         self.processor = Processor()
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
         self.updateBackground = True
-        schedule.every(5).minutes.do(self.everyFive)
+        schedule.every(5).minutes.do(self.onTimer)
         print("done Initial")
 
     def run(self):
