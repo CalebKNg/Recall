@@ -3,7 +3,7 @@ from Camera import Cam
 from processing import Processor
 import torch
 import cv2
-
+import schedule
 classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
               "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat",
               "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella",
@@ -23,10 +23,12 @@ class Recall():
         self.processor = Processor()
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
         self.updateBackground = True
+        schedule.every(5).minutes.do(self.everyFive)
         print("done Initial")
 
     def run(self):
         while True:
+            
             if not self.frameQueue.empty():
                 # print("infer1")
                 frame = self.frameQueue.get()
@@ -71,7 +73,13 @@ class Recall():
                 surroundings.append((x, y, classNames[cls]))
 
         self.processor.surroundingsQueue.put(surroundings)
-    
+
+    def onTimer(self):
+        # raise background flag
+        self.updateBackground = True
+
+        # tell the processor to ask for updates
+
 if __name__ == "__main__":
     app = Recall()
     app.run()
