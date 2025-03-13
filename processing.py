@@ -186,7 +186,7 @@ class Processor():
 
         return string
 
-    def angleBetween(x, y, x2, y2):
+    def angleBetween(self, x, y, x2, y2):
         xdiff = x2 - x
         ydiff = y2 - y
         return np.arctan(ydiff/xdiff)*180/np.pi
