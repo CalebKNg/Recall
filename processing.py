@@ -28,7 +28,7 @@ class Processor():
         self.historyLength = 60
         self.avgLength = 10
         self.sector_size = 360/90
-        
+
         # Queues
         self.detectionsQueue = Queue()
         self.surroundingsQueue = Queue()
@@ -177,12 +177,10 @@ class Processor():
     def relationalString(self, x, y, points):
         string = "Check "
         for px, py, s in points:
-            print(x)
-            print(y)
-            print(px)
-            print(py)
             angle = self.angleBetween(x, y, px, py)
-            string = string + relational_words[int(angle//(self.sector_size))]
+            # string = string + relational_words[int(360//angle)]
+            string = string + relational_words[self.angle_to_direction_int(angle)]
+
             string = string + " " + s + ", "
 
         return string
@@ -192,15 +190,24 @@ class Processor():
         ydiff = y2 - y
         return np.arctan(ydiff/xdiff)*180/np.pi
 
+    def angle_to_direction_int(self, angle):
+        if 315 <= angle < 45 or angle == 0 or angle == 360:
+            return 0  # Right
+        elif 45 <= angle < 135:
+            return 1  # Up
+        elif 135 <= angle < 225:
+            return 2  # Left
+        elif 225 <= angle < 315:
+            return 3  # Down
 
     def toB64(self, img):
-        _, buffer = cv2.imencode('.jpg', img)
-        im_bytes = buffer.tobytes()
-        b64 = base64.b64encode(im_bytes)
-        return b64.decode("utf-8")
-    
+            _, buffer = cv2.imencode('.jpg', img)
+            im_bytes = buffer.tobytes()
+            b64 = base64.b64encode(im_bytes)
+            return b64.decode("utf-8")
+        
 
 
     def terminate(self):
-        self.process.terminate()
-        self.process.join()
+            self.process.terminate()
+            self.process.join()
