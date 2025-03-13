@@ -209,11 +209,11 @@ class Processor():
         if angle < 45 or angle >= 315:
             return 0  # Right
         elif 45 <= angle < 135:
-            return 1  # Up
+            return 3  # Up
         elif 135 <= angle < 225:
             return 2  # Left
         elif 225 <= angle < 315:
-            return 3  # Down
+            return 1  # Down
 
     def toB64(self, img):
             _, buffer = cv2.imencode('.jpg', img)
