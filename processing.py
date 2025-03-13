@@ -143,8 +143,8 @@ class Processor():
                 item.missingCount += 1
                 if item.missingCount == self.historyLength:  # missing for 15 frames
                     print(item.name +" missing")
-                    outputString = "Object out of frame. Last known image:"
-                    self.comm.requestsToSend.put((item.id, item.name, item.lastLocationImage, outputString))
+                    outputString = "Object out of frame:"
+                    self.comm.requestsToSend.put((id, item.name, item.lastLocationImage, outputString))
 
     def obtainBearer(self):
             url = "https://fydp-backend-production.up.railway.app/api/auth/login/" 
