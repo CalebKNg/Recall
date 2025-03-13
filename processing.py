@@ -6,6 +6,7 @@ import config
 import base64
 import numpy as np
 import cv2
+from Comms import Comms
 
 class Object:
     def __init__(self, id, name):
@@ -43,6 +44,9 @@ class Processor():
 
         # Get Initial List
         self.obtainObjects()
+
+        # Create Comms Object
+        self.comm = Comms(self.bearerToken)
 
         self.process = Process(target=self.run)
         self.process.start()
@@ -101,8 +105,9 @@ class Processor():
                         outputString = self.relationalString(x, y, pts)
                         print(outputString)
                         # make request
-                        self.sendUpdate(item.id, item.name, img, outputString)
-                        print("request Finished")
+                        # self.sendUpdate(item.id, item.name, img, outputString)
+                        self.comm.requestsToSend.put((item.id, item.name, img, outputString))
+                        print("update sent")
 
                 else:   # If not moving
                     if dist >= threshold:
@@ -154,18 +159,18 @@ class Processor():
                 self.trackedObjects.append(ob)
             # self.trackedObjects = response.json()   
 
-    def sendUpdate(self, id, name, image, description):
-        url = "https://fydp-backend-production.up.railway.app/ObjectTracking/" + str(id) + "/"
-        headers = {"Content-Type": "application/json", "Authorization":"Bearer " + self.bearerToken}
+    # def sendUpdate(self, id, name, image, description):
+    #     url = "https://fydp-backend-production.up.railway.app/ObjectTracking/" + str(id) + "/"
+    #     headers = {"Content-Type": "application/json", "Authorization":"Bearer " + self.bearerToken}
 
-        data = {
-            "name": name,
-            "location_image": image,
-            "location_description": description
-        }
+    #     data = {
+    #         "name": name,
+    #         "location_image": image,
+    #         "location_description": description
+    #     }
 
-        response = requests.patch(url, json=data, headers=headers)
-        print(response.status_code)    
+    #     response = requests.patch(url, json=data, headers=headers)
+    #     print(response.status_code)    
 
     def findKNearestPoints(self, x, y):
         k = 3
