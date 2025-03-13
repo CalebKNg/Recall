@@ -32,11 +32,13 @@ class Recall():
             if not self.frameQueue.empty():
                 # print("infer1")
                 frame = self.frameQueue.get()
-                self.infer(frame)
+                
                 # Run background
                 if self.updateBackground:
                     self.updateBackground = False
                     self.obtainBackground(frame)
+
+                self.infer(frame)
                     
 
     def infer(self, frame):
