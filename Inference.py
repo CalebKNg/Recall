@@ -67,11 +67,14 @@ while True:
         # object details
         cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
         org = [xmin, ymin]
+        org2 = [xmin+20, ymin+20 ]
         font = cv2.FONT_HERSHEY_SIMPLEX
         fontScale = 1
         color = (255, 0, 0)
         thickness = 2
         cv2.putText(frame, classNames[cls], org, font, fontScale, color, thickness)
+        cv2.putText(frame, str(confidence), org, font, fontScale, color, thickness)
+
 
 
     time.sleep(0.05)
