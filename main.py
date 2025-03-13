@@ -56,30 +56,30 @@ class Recall():
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
                 
-                drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
+                drawnFrame = cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
                 self.processor.detectionsQueue.put((14, x, y, drawnFrame))
 
-            if classNames[int(cls)] == "mouse" and confidence > 0.3:
+            # if classNames[int(cls)] == "mouse" and confidence > 0.3:
                 
-                x = xmin+(xmax-xmin)/2
-                y = ymin+(ymax-ymin)/2
+            #     x = xmin+(xmax-xmin)/2
+            #     y = ymin+(ymax-ymin)/2
                 
-                drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
-                # print("found")
-                # Push into Processor   
-                self.processor.detectionsQueue.put((21, x, y, drawnFrame))
+            #     drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
+            #     # print("found")
+            #     # Push into Processor   
+            #     self.processor.detectionsQueue.put((21, x, y, drawnFrame))
 
-            if classNames[int(cls)] == "bottle" and confidence > 0.3:
+            # if classNames[int(cls)] == "bottle" and confidence > 0.3:
                 
-                x = xmin+(xmax-xmin)/2
-                y = ymin+(ymax-ymin)/2
+            #     x = xmin+(xmax-xmin)/2
+            #     y = ymin+(ymax-ymin)/2
                 
-                drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
-                # print("found")
-                # Push into Processor   
-                self.processor.detectionsQueue.put((20, x, y, drawnFrame))
+            #     drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
+            #     # print("found")
+            #     # Push into Processor   
+            #     self.processor.detectionsQueue.put((20, x, y, drawnFrame))
 
     def obtainBackground(self, frame):
         print("background")
