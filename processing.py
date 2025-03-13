@@ -25,8 +25,8 @@ relational_words = [
 class Processor():
     def __init__(self):
         # Constants
-        self.historyLength = 60
-        self.avgLength = 10
+        self.historyLength = 10
+        self.avgLength = 3
         self.sector_size = 360/90
 
         # Queues
@@ -66,7 +66,7 @@ class Processor():
     def updateLocations(self, id, x, y, frame):
         for item in self.trackedObjects:
             if item.id == id:
-                print("Update Phone")
+                
                 # Grab average of the locHistory 
                 xsum = 0
                 ysum = 0
