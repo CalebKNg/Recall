@@ -24,7 +24,10 @@ relational_words = [
 # This class processes and communicates
 class Processor():
     def __init__(self):
-
+        # Constants
+        self.historyLength = 60
+        self.avgLength = 10
+        
         # Queues
         self.detectionsQueue = Queue()
         self.surroundingsQueue = Queue()
@@ -33,7 +36,6 @@ class Processor():
         self.trackedObjects = []
         # List of surrounding objects
         self.surroundings = []
-
 
         # Get Token
         self.bearerToken = self.obtainBearer()
@@ -46,12 +48,80 @@ class Processor():
 
     def run(self):
         while True:
+            
+            if not self.detectionsQueue.empty():
+                det = self.detectionsQueue.get()
+                # unpack detection
+                id, x, y, frame = det
+                self.updateLocations(id, x, y, frame)
 
             # Update Surroundings
             if not self.surroundings.empty():
                 
                 surr = self.surroundings.get()
                 self.surroundings = surr
+
+
+    def updateLocations(self, id, x, y, frame):
+        for item in self.trackedObjects:
+            if item.id == id:
+
+                # Grab average of the locHistory 
+                xsum = 0
+                ysum = 0
+                for location in item.locHistory:
+                    xsum += location[0]
+                    ysum += location[1]
+                xavg = xsum/len(item.locHistory)
+                yavg = ysum/len(item.locHistory)
+
+                # Grab average of the last 5 
+                xrec = 0
+                yrec = 0
+                for i in range(self.avgLength):
+                    xrec += item.locHistory[i][0]
+                    yrec += item.locHistory[i][1]
+                xrec = xrec/self.avgLength
+                yrec = yrec/self.avgLength
+                # euclidean distance
+                # dist = np.sqrt((x - xavg)**2 + (y - yavg)**2)
+                dist = np.sqrt((xrec - xavg)**2 + (yrec - yavg)**2)
+
+                threshold = 0.01
+                if item.isMoving:
+                    if dist < threshold:
+                        # stopped moving
+                        
+                        # print("Phone moved " + str(dist) + "pixels")
+                        item.isMoving = False
+                        output = self.toB64(frame)
+
+                        pts = self.findKNearestPoints(x, y)
+                        outputString = self.relationalString(x, y, pts)
+                        print(outputString)
+                        # make request
+                        # self.sendUpdate(item.id, output, outputString)
+
+                else:   # If not moving
+                    if dist >= threshold:
+                        item.isMoving = True
+                        # print("Phone is moving")
+
+                # print(item.isMoving)
+                # Update distance
+                item.x = x
+                item.y = y
+                item.lastLocationImage = self.toB64(frame)
+
+                # Update queue
+                if(len(item.locHistory) > self.historyLength):
+                    item.locHistory.pop()
+                    item.locHistory.appendleft((x, y))
+                else:
+                    item.locHistory.appendleft((x, y))
+
+
+
 
     def obtainBearer(self):
             url = "https://fydp-backend-production.up.railway.app/api/auth/login/" 
