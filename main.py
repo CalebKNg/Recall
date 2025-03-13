@@ -49,7 +49,7 @@ class Recall():
             xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
 
             # Check Phone
-            if classNames[int(cls)] == "cell phone" and confidence > 0.6:
+            if classNames[int(cls)] == "cell phone" and confidence > 0.3:
                 
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
