@@ -34,7 +34,7 @@ class Recall():
         r = results.xyxy[0].numpy()
         # print("infer")
         for row in r:
-            print(row)
+            # print(row)
             xmin, ymin, xmax, ymax, confidence, cls = row
             xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
             if classNames[int(cls)] == "person" and confidence > 0.6:
