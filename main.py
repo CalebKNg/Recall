@@ -20,6 +20,8 @@ class Recall():
         self.cam = Cam(self.frameQueue)
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
 
+        print("done Initial")
+
     def run(self):
         while True:
             if not self.frameQueue.empty():
