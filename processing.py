@@ -154,7 +154,7 @@ class Processor():
             # self.trackedObjects = response.json()   
 
     def sendUpdate(self, id, name, image, description):
-        url = "https://fydp-backend-production.up.railway.app/ObjectTracking/" + str(id)
+        url = "https://fydp-backend-production.up.railway.app/ObjectTracking/" + str(id) + "/"
         headers = {"Content-Type": "application/json", "Authorization":"Bearer " + self.bearerToken}
 
         data = {
