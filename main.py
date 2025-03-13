@@ -29,7 +29,7 @@ class Recall():
     def infer(self, frame):
         results = self.model(frame)
         r = results.xyxy[0].numpy()
-
+        print("infer")
         for row in r:
             xmin, ymin, xmax, ymax, confidence, cls = row
             if classNames[cls] == "person" and confidence > 0.6:
