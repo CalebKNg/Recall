@@ -25,6 +25,7 @@ class Recall():
     def run(self):
         while True:
             if not self.frameQueue.empty():
+                print("infer1")
                 frame = self.frameQueue.get()
                 self.infer(frame)
 
