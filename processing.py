@@ -101,7 +101,7 @@ class Processor():
                         outputString = self.relationalString(x, y, pts)
                         print(outputString)
                         # make request
-                        self.sendUpdate(item.id, img, outputString)
+                        self.sendUpdate(item.id, item.name, img, outputString)
 
                 else:   # If not moving
                     if dist >= threshold:
