@@ -19,7 +19,7 @@ import time
 #               ]
 classNames = ["wallet", "airpod", "cell Phone"]
 # Model
-model = torch.hub.load("ultralytics/yolov8", "best")
+model = torch.hub.load("ultralytics/yolov5", "yolov5s")
 
 # Open the default camera
 camera = Picamera2()
