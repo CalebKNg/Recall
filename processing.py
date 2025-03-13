@@ -87,7 +87,7 @@ class Processor():
 
                 # euclidean distance
                 dist = np.sqrt((xrec - xavg)**2 + (yrec - yavg)**2)
-                print(dist)
+                print(item.name+ str(dist))
                 threshold = 5
                 if item.isMoving:
                     if dist < threshold:
