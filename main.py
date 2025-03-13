@@ -25,20 +25,20 @@ class Recall():
     def run(self):
         while True:
             if not self.frameQueue.empty():
-                print("infer1")
+                # print("infer1")
                 frame = self.frameQueue.get()
                 self.infer(frame)
 
     def infer(self, frame):
         results = self.model(frame)
         r = results.xyxy[0].numpy()
-        print("infer")
+        # print("infer")
         for row in r:
             print(row)
             xmin, ymin, xmax, ymax, confidence, cls = row
-            print(cls)
-            if classNames[cls] == "person" and confidence > 0.6:
-                xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
+            xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
+            if classNames[int(cls)] == "person" and confidence > 0.6:
+                
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
                 print(str(x)+str(y))
