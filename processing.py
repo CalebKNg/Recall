@@ -91,7 +91,7 @@ class Processor():
                 if item.isMoving:
                     if dist < threshold:
                         # stopped moving
-                        
+                        print("stopped moving")
                         # print("Phone moved " + str(dist) + "pixels")
                         item.isMoving = False
                         output = self.toB64(frame)
@@ -104,6 +104,7 @@ class Processor():
 
                 else:   # If not moving
                     if dist >= threshold:
+                        print("started moving")
                         item.isMoving = True
                         # print("Phone is moving")
 

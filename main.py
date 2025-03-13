@@ -60,6 +60,7 @@ class Recall():
                 self.processor.detectionsQueue.put((14, x, y, drawnFrame))
 
     def obtainBackground(self, frame):
+        print("background")
         surroundings = []
         results = self.model(frame)
         r = results.xyxy[0].numpy()
