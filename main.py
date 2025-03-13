@@ -85,13 +85,13 @@ class Recall():
                 self.processor.detectionsQueue.put((20, x, y, drawnFrame, False))
         
         if phoneFound == False:
-            self.processor.detectionsQueue.put((14, 0, 0, drawnFrame, True))
+            self.processor.detectionsQueue.put((14, 0, 0, frame, True))
         if mouseFound == False:
-            self.processor.detectionsQueue.put((21, 0, 0, drawnFrame, True))
+            self.processor.detectionsQueue.put((21, 0, 0, frame, True))
         if bottleFound == False:
-            self.processor.detectionsQueue.put((20, 0, 0, drawnFrame, True))
+            self.processor.detectionsQueue.put((20, 0, 0, frame, True))
 
-            
+
     def obtainBackground(self, frame):
         print("background")
         surroundings = []
