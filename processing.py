@@ -66,7 +66,7 @@ class Processor():
     def updateLocations(self, id, x, y, frame):
         for item in self.trackedObjects:
             if item.id == id:
-
+                print("Update Phone")
                 # Grab average of the locHistory 
                 xsum = 0
                 ysum = 0
@@ -87,7 +87,7 @@ class Processor():
 
                 # euclidean distance
                 dist = np.sqrt((xrec - xavg)**2 + (yrec - yavg)**2)
-
+                print(dist)
                 threshold = 0.01
                 if item.isMoving:
                     if dist < threshold:

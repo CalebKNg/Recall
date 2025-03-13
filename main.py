@@ -55,7 +55,7 @@ class Recall():
                 y = ymin+(ymax-ymin)/2
                 
                 drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
-                print("found")
+                # print("found")
                 # Push into Processor   
                 self.processor.detectionsQueue.put((14, x, y, drawnFrame))
 
