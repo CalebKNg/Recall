@@ -186,7 +186,8 @@ class Processor():
         for px, py, s in points:
             angle = int(self.angleBetween(x, y, px, py))
             # string = string + relational_words[int(360//angle)]
-            string = string + relational_words[self.angle_to_direction_int(angle)]
+            # string = string + relational_words[self.angle_to_direction_int(angle)]
+            string = string + str(angle) + " Degrees"
 
             string = string + " " + s + ", "
 
