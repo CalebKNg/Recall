@@ -27,7 +27,8 @@ class Processor():
         # Constants
         self.historyLength = 60
         self.avgLength = 10
-
+        self.sector_size = 360/90
+        
         # Queues
         self.detectionsQueue = Queue()
         self.surroundingsQueue = Queue()
