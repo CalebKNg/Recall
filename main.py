@@ -74,7 +74,9 @@ class Recall():
                 # Push into Processor   
 
                 ##CHANGE THIS
-                self.processor.detectionsQueue.put((24, x, y, drawnFrame, False))
+                # self.processor.detectionsQueue.put((24, x, y, drawnFrame, False))
+                self.processor.detectionsQueue.put((25, x, y, drawnFrame, False))
+
 
             if classNames[int(cls)] == "bottle" and confidence > 0.5:
                 bottleFound = True
@@ -90,7 +92,9 @@ class Recall():
             self.processor.detectionsQueue.put((14, 0, 0, frame, True))
         if mouseFound == False:
             ## CHANGE TEHIS
-            self.processor.detectionsQueue.put((24, 0, 0, frame, True))
+            # self.processor.detectionsQueue.put((24, 0, 0, frame, True))
+            self.processor.detectionsQueue.put((25, 0, 0, frame, True))
+
         if bottleFound == False:
             self.processor.detectionsQueue.put((20, 0, 0, frame, True))
 
