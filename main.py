@@ -45,6 +45,9 @@ class Recall():
         results = self.model(frame)
         r = results.xyxy[0].numpy()
         # print("infer")
+        phoneFound = False
+        mouseFound = False
+        bottleFound = False
         for row in r:
             # print(row)
             xmin, ymin, xmax, ymax, confidence, cls = row
@@ -52,35 +55,43 @@ class Recall():
 
             # Check Phone
             if classNames[int(cls)] == "cell phone" and confidence > 0.5:
-                
+                phoneFound = True
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
                 drawnFrame = frame.copy()
                 drawnFrame = cv2.rectangle(drawnFrame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
-                self.processor.detectionsQueue.put((14, x, y, drawnFrame))
+                self.processor.detectionsQueue.put((14, x, y, drawnFrame, False))
 
             if classNames[int(cls)] == "mouse" and confidence > 0.5:
-                
+                mouseFound = True
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
                 drawnFrame = frame.copy()
                 drawnFrame = cv2.rectangle(drawnFrame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
-                self.processor.detectionsQueue.put((21, x, y, drawnFrame))
+                self.processor.detectionsQueue.put((21, x, y, drawnFrame, False))
 
             if classNames[int(cls)] == "bottle" and confidence > 0.5:
-                
+                bottleFound = True
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
                 drawnFrame = frame.copy()
                 drawnFrame = cv2.rectangle(drawnFrame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
-                self.processor.detectionsQueue.put((20, x, y, drawnFrame))
+                self.processor.detectionsQueue.put((20, x, y, drawnFrame, False))
+        
+        if phoneFound == False:
+            self.processor.detectionsQueue.put((14, 0, 0, drawnFrame, True))
+        if mouseFound == False:
+            self.processor.detectionsQueue.put((21, 0, 0, drawnFrame, True))
+        if bottleFound == False:
+            self.processor.detectionsQueue.put((20, 0, 0, drawnFrame, True))
 
+            
     def obtainBackground(self, frame):
         print("background")
         surroundings = []

@@ -17,6 +17,7 @@ class Object:
         self.locHistory = deque()
         self.isMoving = True
         self.lastLocationImage = ""
+        self.missingCount = 0
 
 relational_words = [
         "the right of", "above", "to the left of", "below", 
@@ -57,8 +58,12 @@ class Processor():
             if not self.detectionsQueue.empty():
                 det = self.detectionsQueue.get()
                 # unpack detection
-                id, x, y, frame = det
-                self.updateLocations(id, x, y, frame)
+                id, x, y, frame, missing = det
+                if missing == False:
+                    self.updateLocations(id, x, y, frame)
+                else:   # Missing
+                    self.missingUpdate(id)
+
 
             # Update Surroundings
             if not self.surroundingsQueue.empty():
@@ -70,6 +75,8 @@ class Processor():
     def updateLocations(self, id, x, y, frame):
         for item in self.trackedObjects:
             if item.id == id:
+                # Not missing anymore
+                item.missingCount = 0 
                 
                 # Grab average of the locHistory 
                 xsum = 0
@@ -130,7 +137,13 @@ class Processor():
                     item.locHistory.appendleft((x, y))
 
 
-
+    def missingUpdate(self, id):
+        for item in self.trackedObjects:
+            if item.id == id:
+                item.missingCount += 1
+                if item.missingCount == self.historyLength:  # missing for 15 frames
+                    outputString = "Object out of frame. Last known image:"
+                    self.comm.requestsToSend.put((item.id, item.name, item.lastLocationImage, outputString))
 
     def obtainBearer(self):
             url = "https://fydp-backend-production.up.railway.app/api/auth/login/" 
