@@ -6,7 +6,7 @@ class Cam():
     def __init__(self, Q):
         picam2 = Picamera2()
         picam2.video_configuration.controls.FrameRate = 25.0
-        picam2.post_callback()
+        picam2.post_callback(self.fillArray)
         self.Q = Q
 
     def fillArray(self, request):
