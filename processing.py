@@ -83,8 +83,8 @@ class Processor():
                     yrec += item.locHistory[i][1]
                 xrec = xrec/self.avgLength
                 yrec = yrec/self.avgLength
+
                 # euclidean distance
-                # dist = np.sqrt((x - xavg)**2 + (y - yavg)**2)
                 dist = np.sqrt((xrec - xavg)**2 + (yrec - yavg)**2)
 
                 threshold = 0.01
@@ -175,6 +175,10 @@ class Processor():
     def relationalString(self, x, y, points):
         string = "Check "
         for px, py, s in points:
+            print(x)
+            print(y)
+            print(px)
+            print(py)
             angle = self.angleBetween(x, y, px, py)
             string = string + relational_words[int(angle//(self.sector_size))]
             string = string + " " + s + ", "
