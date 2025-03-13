@@ -63,7 +63,7 @@ class Recall():
                 # print("found")
                 # Push into Processor   
                 self.processor.detectionsQueue.put((14, x, y, drawnFrame, False))
-
+            ## Update this to 24
             if classNames[int(cls)] == "mouse" and confidence > 0.5:
                 mouseFound = True
                 x = xmin+(xmax-xmin)/2
@@ -72,7 +72,9 @@ class Recall():
                 drawnFrame = cv2.rectangle(drawnFrame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
-                self.processor.detectionsQueue.put((21, x, y, drawnFrame, False))
+
+                ##CHANGE THIS
+                self.processor.detectionsQueue.put((24, x, y, drawnFrame, False))
 
             if classNames[int(cls)] == "bottle" and confidence > 0.5:
                 bottleFound = True
@@ -87,7 +89,8 @@ class Recall():
         if phoneFound == False:
             self.processor.detectionsQueue.put((14, 0, 0, frame, True))
         if mouseFound == False:
-            self.processor.detectionsQueue.put((21, 0, 0, frame, True))
+            ## CHANGE TEHIS
+            self.processor.detectionsQueue.put((24, 0, 0, frame, True))
         if bottleFound == False:
             self.processor.detectionsQueue.put((20, 0, 0, frame, True))
 
