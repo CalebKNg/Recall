@@ -73,7 +73,7 @@ while True:
         color = (255, 0, 0)
         thickness = 2
         cv2.putText(frame, classNames[cls], org, font, fontScale, color, thickness)
-        cv2.putText(frame, str(confidence), org, font, fontScale, color, thickness)
+        # cv2.putText(frame, str(confidence), org, font, fontScale, color, thickness)
 
 
 
