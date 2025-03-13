@@ -75,6 +75,7 @@ class Recall():
                 surroundings.append((x, y, classNames[cls]))
 
         self.processor.surroundingsQueue.put(surroundings)
+        print(surroundings)
 
     def onTimer(self):
         # raise background flag
