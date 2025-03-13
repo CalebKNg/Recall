@@ -186,8 +186,8 @@ class Processor():
         for px, py, s in points:
             angle = int(self.angleBetween(x, y, px, py))
             # string = string + relational_words[int(360//angle)]
-            string = string + relational_words[self.angle_to_direction_int(angle)]
-            # string = string + str(angle) + " Degrees"
+            # string = string + relational_words[self.angle_to_direction_int(angle)]
+            string = string + str(angle) + " Degrees"
 
             string = string + " " + s + ", "
 
@@ -199,13 +199,13 @@ class Processor():
         xdiff = x - xother
         ydiff = y - yother
         # return np.arctan(ydiff/(xdiff+0.00001))*180/np.pi
-        return np.arctan2(xdiff, ydiff) *180/np.pi
+        return (np.arctan2(xdiff, ydiff) *180/np.pi)%360
     
     # relational_words = [
     #     "the right of", "above", "to the left of", "below", 
     # ]
     def angle_to_direction_int(self, angle):
-        angle = angle%360
+        
         if angle < 45 or angle >= 315:
             return 0  # Right
         elif 45 <= angle < 135:
