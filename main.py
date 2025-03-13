@@ -35,8 +35,9 @@ class Recall():
                 self.infer(frame)
                 # Run background
                 if self.updateBackground:
-                    self.obtainBackground(frame)
                     self.updateBackground = False
+                    self.obtainBackground(frame)
+                    
 
     def infer(self, frame):
         results = self.model(frame)
