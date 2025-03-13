@@ -174,7 +174,7 @@ class Processor():
     #     print(response.status_code)    
 
     def findKNearestPoints(self, x, y):
-        k = 2
+        k = 3
         heap = []
         for px, py, s in self.surroundings:
             distance = np.sqrt((px - x) ** 2 + (py - y) ** 2)
@@ -192,13 +192,17 @@ class Processor():
 
         return string
 
-    def angleBetween(self, x, y, x2, y2):
-        xdiff = x - x2
-        ydiff = y - y2
-        return np.arctan(ydiff/(xdiff+0.00001))*180/np.pi
+    def angleBetween(self, x, y, xother, yother):
+        xdiff = xother - x
+        ydiff = yother - y
+        # return np.arctan(ydiff/(xdiff+0.00001))*180/np.pi
+        return np.arctan2(xdiff, ydiff) *180/np.pi
     
+    # relational_words = [
+    #     "the right of", "above", "to the left of", "below", 
+    # ]
     def angle_to_direction_int(self, angle):
-        if angle < 45 or angle > 315 or angle == 0 or angle == 360:
+        if angle < 45 or angle >= 315:
             return 0  # Right
         elif 45 <= angle < 135:
             return 1  # Up
