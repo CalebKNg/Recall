@@ -49,7 +49,7 @@ class Recall():
             # print(row)
             xmin, ymin, xmax, ymax, confidence, cls = row
             xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
-
+            drawnFrame = frame
             # Check Phone
             if classNames[int(cls)] == "cell phone" and confidence > 0.5:
                 
