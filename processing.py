@@ -25,8 +25,8 @@ relational_words = [
 class Processor():
     def __init__(self):
         # Constants
-        self.historyLength = 10
-        self.avgLength = 3
+        self.historyLength = 15
+        self.avgLength = 2
         self.sector_size = 360/90
 
         # Queues
