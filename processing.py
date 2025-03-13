@@ -177,7 +177,7 @@ class Processor():
     def relationalString(self, x, y, points):
         string = "Check "
         for px, py, s in points:
-            angle = self.angleBetween(x, y, px, py)
+            angle = int(self.angleBetween(x, y, px, py))
             # string = string + relational_words[int(360//angle)]
             string = string + relational_words[self.angle_to_direction_int(angle)]
 
@@ -189,9 +189,9 @@ class Processor():
         xdiff = x2 - x
         ydiff = y2 - y
         return np.arctan(ydiff/xdiff)*180/np.pi
-
+    
     def angle_to_direction_int(self, angle):
-        if 315 <= angle < 45 or angle == 0 or angle == 360:
+        if angle < 45 or angle > 315 or angle == 0 or angle == 360:
             return 0  # Right
         elif 45 <= angle < 135:
             return 1  # Up
