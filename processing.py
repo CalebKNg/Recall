@@ -102,6 +102,7 @@ class Processor():
                         print(outputString)
                         # make request
                         self.sendUpdate(item.id, item.name, img, outputString)
+                        print("request Finished")
 
                 else:   # If not moving
                     if dist >= threshold:
