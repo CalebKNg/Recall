@@ -205,7 +205,7 @@ class Processor():
     #     "the right of", "above", "to the left of", "below", 
     # ]
     def angle_to_direction_int(self, angle):
-        angle += 180
+        angle = angle%360
         if angle < 45 or angle >= 315:
             return 0  # Right
         elif 45 <= angle < 135:
