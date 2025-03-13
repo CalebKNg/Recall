@@ -199,7 +199,7 @@ class Processor():
         xdiff = x - xother
         ydiff = y - yother
         # return np.arctan(ydiff/(xdiff+0.00001))*180/np.pi
-        return (np.arctan2(xdiff, ydiff) *180/np.pi)%360
+        return (np.arctan2(ydiff, xdiff) *180/np.pi)%360
     
     # relational_words = [
     #     "the right of", "above", "to the left of", "below", 
