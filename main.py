@@ -36,6 +36,7 @@ class Recall():
         for row in r:
             print(row)
             xmin, ymin, xmax, ymax, confidence, cls = row
+            print(cls)
             if classNames[cls] == "person" and confidence > 0.6:
                 xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
                 x = xmin+(xmax-xmin)/2
