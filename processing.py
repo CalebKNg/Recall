@@ -3,6 +3,9 @@ from multiprocessing import Process, Queue
 import heapq
 from collections import deque
 import config
+import base64
+import numpy as np
+import cv2
 
 class Object:
     def __init__(self, id, name):
@@ -14,43 +17,114 @@ class Object:
         self.isMoving = True
         self.lastLocationImage = ""
 
+relational_words = [
+        "the right of", "above", "to the left of", "below", 
+    ]
 
 # This class processes and communicates
 class Processor():
     def __init__(self):
+
+        # Queues
         self.detectionsQueue = Queue()
+        self.surroundingsQueue = Queue()
+
+        # Tracked objects list
+        self.trackedObjects = []
+        # List of surrounding objects
+        self.surroundings = []
+
+
+        # Get Token
+        self.bearerToken = self.obtainBearer()
+
+        # Get Initial List
+        self.obtainObjects()
+
         self.process = Process(target=self.run)
         self.process.start()
 
     def run(self):
         while True:
-            pass
 
-def obtainBearer(self):
-        url = "https://fydp-backend-production.up.railway.app/api/auth/login/" 
-        headers = {"Content-Type": "application/json"}
-        data = config.data
-        response = requests.post(url, json=data, headers=headers)
+            # Update Surroundings
+            if not self.surroundings.empty():
+                
+                surr = self.surroundings.get()
+                self.surroundings = surr
+
+    def obtainBearer(self):
+            url = "https://fydp-backend-production.up.railway.app/api/auth/login/" 
+            headers = {"Content-Type": "application/json"}
+            data = config.data
+            response = requests.post(url, json=data, headers=headers)
+            # print(response.status_code)
+
+            if (response.status_code == 200):
+                # print(response.json()["access"])
+                return response.json()["access"]
+            
+    def obtainObjects(self):
+        # Ask for a list of objects
+        url = "https://fydp-backend-production.up.railway.app/ObjectTracking/" 
+        headers = {"Content-Type": "application/json", "Authorization":"Bearer " + self.bearerToken}
+
+        response = requests.get(url, headers=headers)
         # print(response.status_code)
+        if(response.status_code == 200):
+            for item in response.json():
+                id = item["id"]
+                name = item["name"]
+                ob = Object(id, name)
+                for i in range(self.avgLength): 
+                    ob.locHistory.append((0,0))
+                self.trackedObjects.append(ob)
+            # self.trackedObjects = response.json()   
 
-        if (response.status_code == 200):
-            # print(response.json()["access"])
-            return response.json()["access"]
-        
-def obtainObjects(self):
-    # Ask for a list of objects
-    url = "https://fydp-backend-production.up.railway.app/ObjectTracking/" 
-    headers = {"Content-Type": "application/json", "Authorization":"Bearer " + self.bearerToken}
-    # print("obtain")
-    # print(headers)
-    response = requests.get(url, headers=headers)
-    # print(response.status_code)
-    if(response.status_code == 200):
-        for item in response.json():
-            id = item["id"]
-            name = item["name"]
-            ob = Object(id, name)
-            for i in range(self.avgLength): 
-                ob.locHistory.append((0,0))
-            self.trackedObjects.append(ob)
-        # self.trackedObjects = response.json()   
+    def sendUpdate(self, id, name, image, description):
+        url = "fydp-backend-production.up.railway.app/ObjectTracking/" + str(id)
+        headers = {"Content-Type": "application/json", "Authorization":"Bearer " + self.bearerToken}
+
+        data = {
+            "name": name,
+            "location_image": image,
+            "location_description": description
+        }
+
+        response = requests.patch(url, json=data, headers=headers)
+        print(response.status_code)    
+
+    def findKNearestPoints(self, x, y):
+        k = 3
+        heap = []
+        for px, py, s in self.surroundings:
+            distance = np.sqrt((px - x) ** 2 + (py - y) ** 2)
+            heapq.heappush(heap, (distance, (px, py, s)))
+        return [heapq.heappop(heap)[1] for _ in range(min(k, len(heap)))]
+
+    def relationalString(self, x, y, points):
+        string = "Check "
+        for px, py, s in points:
+            angle = self.angleBetween(x, y, px, py)
+            string = string + relational_words[int(angle//(self.sector_size))]
+            string = string + " " + s + ", "
+
+        return string
+
+    def angleBetween(x, y, x2, y2):
+        xdiff = x2 - x
+        ydiff = y2 - y
+        return np.arctan(ydiff/xdiff)*180/np.pi
+
+
+    def toB64(self, img):
+        _, buffer = cv2.imencode('.jpg', img)
+        im_bytes = buffer.tobytes()
+        b64 = base64.b64encode(im_bytes)
+        return b64.decode("utf-8")
+    
+
+
+    def terminate(self):
+        self.process.terminate()
+        self.process.join()
