@@ -49,14 +49,14 @@ class Recall():
             # print(row)
             xmin, ymin, xmax, ymax, confidence, cls = row
             xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
-            drawnFrame = frame
+
             # Check Phone
             if classNames[int(cls)] == "cell phone" and confidence > 0.5:
                 
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
-                
-                drawnFrame = cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
+                drawnFrame = frame.copy()
+                drawnFrame = cv2.rectangle(drawnFrame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
                 self.processor.detectionsQueue.put((14, x, y, drawnFrame))
@@ -65,8 +65,8 @@ class Recall():
                 
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
-                
-                drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
+                drawnFrame = frame.copy()
+                drawnFrame = cv2.rectangle(drawnFrame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
                 self.processor.detectionsQueue.put((21, x, y, drawnFrame))
@@ -75,8 +75,8 @@ class Recall():
                 
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
-                
-                drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
+                drawnFrame = frame.copy()
+                drawnFrame = cv2.rectangle(drawnFrame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
                 # print("found")
                 # Push into Processor   
                 self.processor.detectionsQueue.put((20, x, y, drawnFrame))
