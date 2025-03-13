@@ -19,7 +19,7 @@ class Recall():
         self.frameQueue = Queue()
         self.cam = Cam(self.frameQueue)
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
-
+        torch.set_warn_always(False)
         print("done Initial")
 
     def run(self):
