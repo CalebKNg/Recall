@@ -53,3 +53,7 @@ def process():
 # Check endpoint for new items to be tracked (probably  not)
 def update():
     pass
+
+if __name__ == "__main__":
+    app = Recall()
+    app.run()
