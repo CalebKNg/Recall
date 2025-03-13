@@ -194,7 +194,7 @@ class Processor():
     def angleBetween(self, x, y, x2, y2):
         xdiff = x2 - x
         ydiff = y2 - y
-        return np.arctan(ydiff/xdiff)*180/np.pi
+        return np.arctan(ydiff/(xdiff+0.00001))*180/np.pi
     
     def angle_to_direction_int(self, angle):
         if angle < 45 or angle > 315 or angle == 0 or angle == 360:
