@@ -2,6 +2,7 @@ from multiprocessing import Process, Queue
 from Camera import Cam
 from processing import Processor
 import torch
+import cv2
 
 classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
               "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat",
@@ -38,12 +39,33 @@ class Recall():
             # print(row)
             xmin, ymin, xmax, ymax, confidence, cls = row
             xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
-            if classNames[int(cls)] == "person" and confidence > 0.6:
+
+            # Check Phone
+            if classNames[int(cls)] == "cell phone" and confidence > 0.6:
                 
                 x = xmin+(xmax-xmin)/2
                 y = ymin+(ymax-ymin)/2
-                print(str(x)+str(y))
+                
+                drawnFrame= cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
 
+                # Push into Processor
+                self.processor.detectionsQueue.put((14, x, y, drawnFrame))
+
+    def obtainBackground(self, frame):
+        surroundings = []
+        results = self.model(frame)
+        r = results.xyxy[0].numpy()
+        # print("infer")
+        for row in r:
+            # print(row)
+            xmin, ymin, xmax, ymax, confidence, cls = row
+            xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
+            if classNames[cls] != "person" and classNames[cls] != "cell phone" and confidence > 0.6:
+                x = xmin+(xmax-xmin)/2
+                y = ymin+(ymax-ymin)/2
+                surroundings.append((x, y, classNames[cls]))
+
+        self.processor.surroundingsQueue.put(surroundings)
     
 if __name__ == "__main__":
     app = Recall()
