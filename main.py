@@ -1,5 +1,6 @@
 from multiprocessing import Process, Queue
 from Camera import Cam
+from processing import Processor
 import torch
 
 classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
@@ -18,8 +19,8 @@ class Recall():
     def __init__(self):
         self.frameQueue = Queue()
         self.cam = Cam(self.frameQueue)
+        self.processor = Processor()
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
-        torch.set_warn_always(False)
         print("done Initial")
 
     def run(self):
@@ -44,21 +45,6 @@ class Recall():
                 print(str(x)+str(y))
 
     
-
-
-
-# Run the model on the current frame, obtain the image
-def controlCam():
-    pass
-
-# Process the image. If the objects have stopped moving, send infomation to the endpoint
-def process():
-    pass
-
-# Check endpoint for new items to be tracked (probably  not)
-def update():
-    pass
-
 if __name__ == "__main__":
     app = Recall()
     app.run()
