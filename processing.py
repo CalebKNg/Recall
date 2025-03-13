@@ -27,7 +27,7 @@ class Processor():
         # Constants
         self.historyLength = 60
         self.avgLength = 10
-        
+
         # Queues
         self.detectionsQueue = Queue()
         self.surroundingsQueue = Queue()
@@ -56,9 +56,9 @@ class Processor():
                 self.updateLocations(id, x, y, frame)
 
             # Update Surroundings
-            if not self.surroundings.empty():
+            if not self.surroundingsQueue.empty():
                 
-                surr = self.surroundings.get()
+                surr = self.surroundingsQueue.get()
                 self.surroundings = surr
 
 
