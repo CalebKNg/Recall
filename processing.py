@@ -99,7 +99,7 @@ class Processor():
                         print(item.name + " stopped moving")
                         # print("Phone moved " + str(dist) + "pixels")
                         item.isMoving = False
-                        smallframe = cv2.resize(frame, (int(frame.shape[1]*0.25), int(frame.shape[0]*0.25)))
+                        smallframe = cv2.resize(frame, (int(frame.shape[1]*0.5), int(frame.shape[0]*0.5)))
                         img = self.toB64(smallframe)
 
                         pts = self.findKNearestPoints(x, y)
