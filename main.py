@@ -22,6 +22,7 @@ class Recall():
         self.cam = Cam(self.frameQueue)
         self.processor = Processor()
         self.model = torch.hub.load("ultralytics/yolov5", "yolov5s")
+        self.updateBackground = True
         print("done Initial")
 
     def run(self):
@@ -30,6 +31,10 @@ class Recall():
                 # print("infer1")
                 frame = self.frameQueue.get()
                 self.infer(frame)
+                # Run background
+                if self.updateBackground:
+                    self.obtainBackground(frame)
+                    self.updateBackground = False
 
     def infer(self, frame):
         results = self.model(frame)
