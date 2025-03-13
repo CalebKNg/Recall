@@ -174,7 +174,7 @@ class Processor():
     #     print(response.status_code)    
 
     def findKNearestPoints(self, x, y):
-        k = 3
+        k = 2
         heap = []
         for px, py, s in self.surroundings:
             distance = np.sqrt((px - x) ** 2 + (py - y) ** 2)
