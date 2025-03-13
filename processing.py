@@ -142,6 +142,7 @@ class Processor():
             if item.id == id:
                 item.missingCount += 1
                 if item.missingCount == self.historyLength:  # missing for 15 frames
+                    print(item.name +" missing")
                     outputString = "Object out of frame. Last known image:"
                     self.comm.requestsToSend.put((item.id, item.name, item.lastLocationImage, outputString))
 
