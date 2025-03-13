@@ -95,13 +95,13 @@ class Processor():
                         print("stopped moving")
                         # print("Phone moved " + str(dist) + "pixels")
                         item.isMoving = False
-                        output = self.toB64(frame)
+                        img = self.toB64(frame)
 
                         pts = self.findKNearestPoints(x, y)
                         outputString = self.relationalString(x, y, pts)
                         print(outputString)
                         # make request
-                        # self.sendUpdate(item.id, output, outputString)
+                        self.sendUpdate(item.id, img, outputString)
 
                 else:   # If not moving
                     if dist >= threshold:
