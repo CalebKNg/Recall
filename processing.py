@@ -88,7 +88,7 @@ class Processor():
                 # euclidean distance
                 dist = np.sqrt((xrec - xavg)**2 + (yrec - yavg)**2)
                 print(dist)
-                threshold = 0.01
+                threshold = 5
                 if item.isMoving:
                     if dist < threshold:
                         # stopped moving
