@@ -77,7 +77,7 @@ while True:
 
 
 
-    time.sleep(0.05)
+    time.sleep(0.01)
     cv2.imshow('Camera', frame)
     
     # Press 'q' to exit the loop
