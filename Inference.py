@@ -25,10 +25,13 @@ model = torch.hub.load("ultralytics/yolov5", "yolov5s")
 camera = Picamera2()
 camera.configure(camera.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)}))
 camera.start()
+
 # Bit of a delay for camera
 time.sleep(0.1)
 
-
+result = cv2.VideoWriter('filename.avi',  
+                         cv2.VideoWriter_fourcc(*'MJPG'), 
+                         10, (640, 480)) 
 
 while True:
     # ~ ret, frame = cam.read()
@@ -64,7 +67,7 @@ while True:
         # cv2.putText(frame, str(confidence), org, font, fontScale, color, thickness)
 
 
-
+    result.write(frame) 
     time.sleep(0.05)
     cv2.imshow('Camera', frame)
     
@@ -75,4 +78,5 @@ while True:
 # ~ # Release the capture and writer objects
 # ~ cam.release()
 # ~ out.release()
+result.release()
 cv2.destroyAllWindows()
