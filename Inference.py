@@ -47,7 +47,6 @@ while True:
         if classNames[int(cls)] == "mouse" or classNames[int(cls)] == "bottle" or classNames[int(cls)] == "phone":
             if confidence > 0.5:
                 # object details
-                cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 255, 255), 3)
                 org = [xmin, ymin]
                 org2 = [xmin-200, ymin-200 ]
                 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -59,6 +58,8 @@ while True:
                 elif classNames[int(cls)] == "phone":
                     color = (0, 0, 255)
                 thickness = 2
+                cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), color, 3)
+
                 cv2.putText(frame, classNames[cls], org, font, fontScale, color, thickness)
         # cv2.putText(frame, str(confidence), org, font, fontScale, color, thickness)
 
