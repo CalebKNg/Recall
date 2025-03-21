@@ -42,37 +42,24 @@ while True:
     for row in r:
         xmin, ymin, xmax, ymax, confidence, cls = row
         
-        xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)
-        
-    # boxes = results.boxes
+        xmin, ymin, xmax, ymax, cls = int(xmin), int(ymin), int(xmax), int(ymax), int(cls)    
 
-    # for box in boxes:
-    #     # bounding box
-    #     x1, y1, x2, y2 = box.xyxy[0]
-    #     x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2) # convert to int values
-
-    #     # put box in cam
-
-    #     # confidence
-    #     confidence = math.ceil((box.conf[0]*100))/100
-    #     # print("Confidence --->",confidence)
-
-    #     # class name
-    #     cls = int(box.cls[0])
-    #     # print("Class name -->", classNames[cls])
-        
-
-
-
-        # object details
-        cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 0, 255), 3)
-        org = [xmin, ymin]
-        org2 = [xmin-200, ymin-200 ]
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        fontScale = 1
-        color = (255, 0, 0)
-        thickness = 2
-        cv2.putText(frame, classNames[cls], org, font, fontScale, color, thickness)
+        if classNames[int(cls)] == "mouse" or classNames[int(cls)] == "bottle" or classNames[int(cls)] == "phone":
+            if confidence > 0.5:
+                # object details
+                cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (255, 255, 255), 3)
+                org = [xmin, ymin]
+                org2 = [xmin-200, ymin-200 ]
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                fontScale = 1
+                if classNames[int(cls)] == "mouse":
+                    color = (255, 0, 0)
+                elif classNames[int(cls)] == "bottle":
+                    color = (0, 255, 0)
+                elif classNames[int(cls)] == "phone":
+                    color = (0, 0, 255)
+                thickness = 2
+                cv2.putText(frame, classNames[cls], org, font, fontScale, color, thickness)
         # cv2.putText(frame, str(confidence), org, font, fontScale, color, thickness)
 
 
